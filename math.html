@@ -1,52 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8" />
 <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+
 <title>Math Worksheet</title>
 <style>
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: max-content auto;
   background-color: #2196F3;
   padding: 10px;
+  height: 90vh;
+  max-width: 600px;
 }
 .grid-item {
   background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 20px;
-  font-size: 30px;
+  font-size: 15vh;
   text-align: center;
 }
 .operator {
   text-align: right !important;
 }
+
+.answer {
+  border-top: 3px solid rgba(0, 0, 0, 1.0);
+}
 </style>
 <script language='JavaScript'>
-   function populate() {
-      document.getElementById('top').value = rand();
-      document.getElementById('bottom').value = rand();
+
+   function rand() {
+     return Math.floor(Math.random() * 11);
    }
 
-function rand() {
-  return Math.floor(Math.random() * 11);
-}
+   function populate() {
+      document.getElementById('top').innerText = rand();
+      document.getElementById('bottom').innerText = rand();
+      document.getElementById('answer').innerText = '?';
+   }
 
-function rand(min, max) {
-  return Math.floor(Math.random() * (max - min) ) + min;
-}
+   function showAnswer() {
+      var t = parseInt(document.getElementById('top').innerText);
+      var b = parseInt(document.getElementById('bottom').innerText);
 
+      document.getElementById('answer').innerText = (t + b);
+   }
+
+   function handleClick() {
+      if(document.getElementById('answer').innerText == '?') {
+        showAnswer();
+      } else {
+        populate();
+      }
+   }
+
+   document.addEventListener("DOMContentLoaded", function(event) { 
+     populate();
+   });
 </script>
 </head>
 
 
-<body onLoad='javascript:populate()'>
+<body onclick='javascript:handleClick()'>
 <div class='grid-container'>
   <div class='grid-item spacer'></div>
-  <div class='grid-item number' id='top'></div>
+  <div class='grid-item number' id='top'>5</div>
   <div class='grid-item operator' id='operator'>+</div>
   <div class='grid-item number' id='bottom'></div>
   <div class='grid-item spacer'></div>
-  <div class='grid-item answer' id='answer'></div>
+  <div class='grid-item answer' id='answer'> </div>
 </div>
 
 </body>
